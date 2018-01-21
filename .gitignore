@@ -1,0 +1,10 @@
+*.pyc
+*.CSV
+*.csv
+*.jpg
+static/jquery*
+secret_*.txt
+
+*/__pycache__/*
+*/migrations/*
+*/__init__.py
