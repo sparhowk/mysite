@@ -14,4 +14,26 @@
     {% with comments.count as total_comments %}
         {{ total_comments }} komentarz{{ total_comments|pluralize }}
     {% endwith %}
+    {% for comment in comments %}
+        <div class="comment">
+            <p class="info">
+                Komentarz {{ foorloop.counter }} opublikowany przez {{ comment.name }}, {{ comment.created }}
+            </p>
+                {{ comment.body|linebreaks }}
+        </div>
+    {% empty %}
+        <p>Jeszcze brak komentarzy</p>
+    {% endfor %}
+
+    {% if new_comment %}
+        <h2>Komentarz został dodany</h2>
+    {% else %}
+        <h2>Dodaj nowy komentarz </h2>
+        <form action="." method="post">
+            {{ comment_form.as_p }}
+            {% csrf_token %}
+            <input type="submit" value="Dodaj komentarz">
+        </form>
+    {% endif %}
+
 {% endblock %}

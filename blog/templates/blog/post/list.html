@@ -14,6 +14,10 @@
             Opublikowany {{ post.publish }} przez {{ post.author }}
         </p>
         {{ post.body|truncatewords:30|linebreaks }}
+        {% if tag %}
+            <h2>Tagi "{{ tag.name }}"</h2>
+        {% endif %}
     {% endfor %}
-    {% include "blog/post/pagination.html" with page=page_obj %}
+    <!--{% include "blog/post/pagination.html" with page=page_obj %}-->
+    {% include "blog/post/pagination.html" with page=posts %}
 {% endblock %}

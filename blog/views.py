@@ -3,6 +3,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
 from django.core.mail import send_mail
 from .models import Post, Comment
+from taggit.models import Tag
 from .forms import EmailPostForm, CommentForm
 
 
@@ -13,9 +14,15 @@ class PostListView(ListView):
     template_name = 'blog/post/list.html'
 
 
-def post_list(request):
+def post_list(request, tag_slug=None):
     template_name = 'blog/post/list.html'
     posts_list = Post.published.all()
+    tag = None
+
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        post_list = post_list.filter(tags__in=[tag])
+
     paginator = Paginator(posts_list, 1)
     page = request.GET.get('page')
     try:
